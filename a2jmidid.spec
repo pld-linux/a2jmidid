@@ -11,7 +11,10 @@ URL:		https://a2jmidid.ladish.org/
 BuildRequires:	alsa-lib-devel
 BuildRequires:	dbus-devel
 BuildRequires:	jack-audio-connection-kit-devel
-BuildRequires:	python
+BuildRequires:	meson >= 0.50.0
+BuildRequires:	ninja >= 1.5
+BuildRequires:	pkgconfig
+BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -28,21 +31,14 @@ MIDI JACK.
 %{__sed} -i -e '1s,/usr/bin/env python$,%{__python3},' a2j_control
 
 %build
-CC="%{__cc}" \
-CXX="%{__cxx}" \
-CPP="%{__cpp}" \
-CFLAGS="%{rpmcflags}" \
-CXXFLAGS="%{rpmcxxflags}" \
-LINKFLAGS="%{rpmldflags}" \
-./waf configure \
-	--prefix="%{_prefix}"
+%meson build
 
-./waf build -vv
+%ninja_build -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-./waf install --destdir=$RPM_BUILD_ROOT
+%ninja_install -C build
 
 %clean
 rm -rf $RPM_BUILD_ROOT
