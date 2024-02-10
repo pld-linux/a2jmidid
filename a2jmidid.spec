@@ -1,8 +1,8 @@
-
 # not under active development, let's use latest code in GIT
 %define commit 034d5db
 
 Summary:	Daemon for exposing legacy ALSA sequencer applications in JACK MIDI system
+Summary(pl.UTF-8):	Demon udostępniający tradycyjne aplikacje sekwencera ALSA w systemie MIDI JACK
 Name:		a2jmidid
 Version:	8
 Release:	1
@@ -20,6 +20,10 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 A daemon for exposing legacy ALSA sequencer applications in JACK MIDI
 system.
+
+%description -l pl.UTF-8
+Demon udostępniający tradycyjne aplikacje sekwencera ALSA w systemie
+MIDI JACK.
 
 %prep
 %setup -qn %{name}-%{commit}
