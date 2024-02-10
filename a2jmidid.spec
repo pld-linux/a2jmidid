@@ -1,16 +1,13 @@
-# not under active development, let's use latest code in GIT
-%define commit 034d5db
-
 Summary:	Daemon for exposing legacy ALSA sequencer applications in JACK MIDI system
 Summary(pl.UTF-8):	Demon udostępniający tradycyjne aplikacje sekwencera ALSA w systemie MIDI JACK
 Name:		a2jmidid
-Version:	8
+Version:	12
 Release:	1
 License:	GPL v2
 Group:		Applications
-Source0:	http://repo.or.cz/a2jmidid.git/snapshot/%{commit}.tar.gz
-# Source0-md5:	df6b7cfb372fcafef532eefe08eab448
-URL:		http://repo.or.cz/a2jmidid.git/
+Source0:	http://dl.ladish.org/a2jmidid/%{name}-%{version}.tar.bz2
+# Source0-md5:	8335cf6bdc52527fb9d5989e5cea18fe
+URL:		https://a2jmidid.ladish.org/
 BuildRequires:	alsa-lib-devel
 BuildRequires:	dbus-devel
 BuildRequires:	jack-audio-connection-kit-devel
@@ -26,7 +23,9 @@ Demon udostępniający tradycyjne aplikacje sekwencera ALSA w systemie
 MIDI JACK.
 
 %prep
-%setup -qn %{name}-%{commit}
+%setup -q
+
+%{__sed} -i -e '1s,/usr/bin/env python$,%{__python3},' a2j_control
 
 %build
 CC="%{__cc}" \
@@ -50,7 +49,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS NEWS README
+%doc AUTHORS.rst NEWS.rst README
 %attr(755,root,root) %{_bindir}/a2j
 %attr(755,root,root) %{_bindir}/a2j_control
 %attr(755,root,root) %{_bindir}/a2jmidi_bridge
